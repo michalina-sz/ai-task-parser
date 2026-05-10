@@ -4,11 +4,13 @@ import { ParsedTask } from '@/types/parsed-task';
 type ResultsPanelProps = {
 	submittedText: string;
 	tasks: Array<ParsedTask>;
+	error: string;
 };
 
 export default function ResultsPanel({
 	submittedText,
 	tasks,
+	error,
 }: ResultsPanelProps) {
 	return (
 		<section className='mx-auto w-full max-w-3xl px-4 pb-20 pt-6'>
@@ -18,7 +20,11 @@ export default function ResultsPanel({
 					{submittedText}
 				</p>
 			)}
-			{tasks.length === 0 ? (
+			{error ? (
+				<p className='rounded-3xl border border-destructive/40 bg-destructive/10 px-6 py-16 text-center text-sm font-medium text-destructive'>
+					{error}
+				</p>
+			) : tasks.length === 0 ? (
 				<p className='rounded-3xl border border-dashed border-border px-6 py-16 text-center text-sm text-muted-foreground'>
 					There are no tasks
 				</p>

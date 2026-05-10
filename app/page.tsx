@@ -5,44 +5,47 @@ import ResultsPanel from '@/components/ResultsPanel';
 import TaskInput from '@/components/TaskInput';
 import { ParsedTask } from '@/types/parsed-task';
 
-const mockedTasks: ParsedTask[] = [
-	{
-		id: '1',
-		title: 'Clean the house',
-		type: 'task',
-		date: '2027-02-01',
-		time: '12:20',
-		priority: 'medium',
-	},
-	{
-		id: '2',
-		title: 'Call a doctor',
-		type: 'reminder',
-		date: '2027-02-01',
-		priority: 'high',
-	},
-	{
-		id: '3',
-		title: 'Read a book',
-		type: 'task',
-		priority: 'low',
-	},
-];
-
 export default function Home() {
 	const [submittedText, setSubmittedText] = useState('');
 	const [tasks, setTasks] = useState<ParsedTask[]>([]);
+	const [error, setError] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
-	const handleSubmit = (text: string) => {
+	const handleSubmit = async (text: string) => {
+		setIsLoading(true);
+		setError('');
 		setSubmittedText(text);
-		setTasks(mockedTasks);
+
+		try {
+			const response = await fetch('/api/parse-task', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ text }),
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				setTasks([]);
+				setError(data.error || 'Something went wrong');
+				return;
+			}
+			setTasks(data.tasks);
+		} catch {
+			setTasks([]);
+			setError('Something went wrong');
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
 		<main className='min-h-screen bg-background text-foreground'>
 			<Header />
-			<TaskInput onSubmit={handleSubmit} />
-			<ResultsPanel submittedText={submittedText} tasks={tasks} />
+			<TaskInput onSubmit={handleSubmit} isLoading={isLoading} />
+			<ResultsPanel submittedText={submittedText} tasks={tasks} error={error} />
 		</main>
 	);
 }

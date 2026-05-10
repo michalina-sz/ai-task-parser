@@ -6,22 +6,17 @@ import { Textarea } from './ui/textarea';
 
 type TaskInputProps = {
 	onSubmit: (text: string) => void;
+	isLoading: boolean;
 };
 
-export default function TaskInput({ onSubmit }: TaskInputProps) {
+export default function TaskInput({ onSubmit, isLoading }: TaskInputProps) {
 	const [input, setInput] = useState('');
-	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = () => {
 		if (!input.trim()) return;
 
-		setIsLoading(true);
-
-		setTimeout(() => {
-			onSubmit(input.trim());
-			setInput('');
-			setIsLoading(false);
-		}, 800);
+		onSubmit(input.trim());
+		setInput('');
 	};
 	return (
 		<>
@@ -31,8 +26,9 @@ export default function TaskInput({ onSubmit }: TaskInputProps) {
 					<span className='text-primary'>clear actions.</span>
 				</h1>
 				<p className='mx-auto max-w-2xl text-base leading-7 text-muted-foreground'>
-					AI Task Parser reads your brain dump and organizes it into prioritized,
-					scheduled tasks — so you can stop sorting and start doing.
+					AI Task Parser reads your brain dump and organizes it into
+					prioritized, scheduled tasks — so you can stop sorting and start
+					doing.
 				</p>
 			</section>
 			<section className='flex justify-center px-4 py-6'>
@@ -46,7 +42,7 @@ export default function TaskInput({ onSubmit }: TaskInputProps) {
 					/>
 					{isLoading && (
 						<p className='text-sm text-muted-foreground'>
-							Botly is organizing your thoughts...
+							Organizing your thoughts...
 						</p>
 					)}
 					<div className='flex justify-end'>
