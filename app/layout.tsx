@@ -15,6 +15,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
 	title: 'AI Task Parser',
 	description: 'A small MVP that turns natural language into structured tasks.',
+	icons: {
+		icon: '/icon.svg',
+	},
 };
 
 export default function RootLayout({

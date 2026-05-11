@@ -19,14 +19,24 @@ const ParsedTasksSchema = z.object({
 	tasks: z.array(ParsedTaskSchema),
 });
 
+const MAX_INPUT_LENGTH = 800;
+
 export async function POST(request: Request) {
 	const body = await request.json();
 
-	const text = body.text;
+	const text = typeof body.text === 'string' ? body.text.trim() : '';
 
-	if (!text || !text.trim()) {
+	if (!text) {
 		return Response.json({ error: 'Text is required' }, { status: 400 });
 	}
+
+	if (text.length > MAX_INPUT_LENGTH) {
+		return Response.json(
+			{ error: `Text must be ${MAX_INPUT_LENGTH} characters or less` },
+			{ status: 400 },
+		);
+	}
+
 	const today = new Date().toISOString().slice(0, 10);
 
 	try {
@@ -45,6 +55,7 @@ export async function POST(request: Request) {
 			text: {
 				format: zodTextFormat(ParsedTasksSchema, 'parsed_tasks'),
 			},
+			max_output_tokens: 1200,
 		});
 
 		const parsed = aiResponse.output_parsed;
