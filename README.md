@@ -13,6 +13,10 @@ The app is intentionally focused: a user can paste a short brain dump, send it t
 - Dark UI built with Tailwind and shadcn/ui components
 - Relative date handling using the current server date
 
+## Demo
+
+https://ai-task-parser.vercel.app/
+
 ## Tech Stack
 
 - Next.js App Router
@@ -86,5 +90,3 @@ I used AI coding tools as part of the development process to plan the component 
 - Improve prompt quality for edge cases
 - Add task editing/removal
 - Add better priority styling
-- Add deployment preview
-- Add a short project write-up with screenshots
