@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Task Parser
+
+A small portfolio MVP that turns messy natural language into structured tasks using Next.js and the OpenAI API.
+
+The app is intentionally focused: a user can paste a short brain dump, send it to a server-side parser, and receive a clean list of tasks with type, priority, date, and time when available.
+
+## Features
+
+- Natural language task input
+- Server-side OpenAI API integration
+- Structured AI output with Zod schema validation
+- Loading and error states
+- Dark UI built with Tailwind and shadcn/ui components
+- Relative date handling using the current server date
+
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- OpenAI SDK
+- Zod
+
+## How It Works
+
+```txt
+User input
+  -> Next.js API route
+  -> OpenAI structured output
+  -> Zod-shaped task data
+  -> Results panel
+```
+
+The OpenAI request runs in `app/api/parse-task/route.ts`, so the API key stays on the server and is not exposed to the browser.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a local environment file:
+
+```bash
+cp .env.example .env.local
+```
+
+Add your OpenAI API key:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+| --- | --- |
+| `OPENAI_API_KEY` | Server-side OpenAI API key used by the task parsing route |
 
-## Learn More
+Do not commit `.env.local`.
 
-To learn more about Next.js, take a look at the following resources:
+## AI-Assisted Workflow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I used AI coding tools as part of the development process to plan the component structure, review TypeScript/API flow, iterate on UI styling, and reason through the OpenAI integration step by step.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Current Limitations
 
-## Deploy on Vercel
+- Tasks are replaced on each new parse instead of stored as a persistent list.
+- Parsed dates depend on the current server date and model interpretation.
+- There is no database or authentication.
+- Editing and deleting parsed tasks are not implemented yet.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Next Steps
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Improve prompt quality for edge cases
+- Add task editing/removal
+- Add better priority styling
+- Add deployment preview
+- Add a short project write-up with screenshots

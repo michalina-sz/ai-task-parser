@@ -6,7 +6,6 @@ import TaskInput from '@/components/TaskInput';
 import { ParsedTask } from '@/types/parsed-task';
 
 export default function Home() {
-	const [submittedText, setSubmittedText] = useState('');
 	const [tasks, setTasks] = useState<ParsedTask[]>([]);
 	const [error, setError] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +13,6 @@ export default function Home() {
 	const handleSubmit = async (text: string) => {
 		setIsLoading(true);
 		setError('');
-		setSubmittedText(text);
 
 		try {
 			const response = await fetch('/api/parse-task', {
@@ -45,7 +43,7 @@ export default function Home() {
 		<main className='min-h-screen bg-background text-foreground'>
 			<Header />
 			<TaskInput onSubmit={handleSubmit} isLoading={isLoading} />
-			<ResultsPanel submittedText={submittedText} tasks={tasks} error={error} />
+			<ResultsPanel tasks={tasks} error={error} />
 		</main>
 	);
 }

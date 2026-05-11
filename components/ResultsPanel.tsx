@@ -2,24 +2,17 @@ import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import { ParsedTask } from '@/types/parsed-task';
 
 type ResultsPanelProps = {
-	submittedText: string;
 	tasks: Array<ParsedTask>;
 	error: string;
 };
 
 export default function ResultsPanel({
-	submittedText,
 	tasks,
 	error,
 }: ResultsPanelProps) {
 	return (
 		<section className='mx-auto w-full max-w-3xl px-4 pb-20 pt-6'>
 			<h3 className='mb-4 text-sm font-medium text-foreground'>Parsed Tasks</h3>
-			{submittedText && (
-				<p className='mb-4 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm text-muted-foreground'>
-					{submittedText}
-				</p>
-			)}
 			{error ? (
 				<p className='rounded-3xl border border-destructive/40 bg-destructive/10 px-6 py-16 text-center text-sm font-medium text-destructive'>
 					{error}
