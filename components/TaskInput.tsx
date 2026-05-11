@@ -9,6 +9,8 @@ type TaskInputProps = {
 	isLoading: boolean;
 };
 
+const MAX_INPUT_LENGTH = 800;
+
 export default function TaskInput({ onSubmit, isLoading }: TaskInputProps) {
 	const [input, setInput] = useState('');
 
@@ -38,6 +40,7 @@ export default function TaskInput({ onSubmit, isLoading }: TaskInputProps) {
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						disabled={isLoading}
+						maxLength={MAX_INPUT_LENGTH}
 						className='min-h-56 resize-none border-0 bg-transparent px-1 py-2 text-base text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-0'
 					/>
 					{isLoading && (
